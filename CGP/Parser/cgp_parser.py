@@ -8,73 +8,80 @@ import os
 import sys
 
 def type_os():
-    package_manager = str(input("Введите тип дистрибутива Linux (deb/rpm): ")).strip().lower()  # Очистка и приведение к нижнему регистру
+    package_manager = str(input("Enter the Linux distribution type (deb/rpm): ")).strip().lower()  # Clean up and convert to lowercase
     if package_manager not in ["deb", "rpm"]:
-        print("Ошибка: введено некорректное значение. Пожалуйста, введите 'deb' или 'rpm'.")
-        sys.exit(1)  # Завершаем выполнение скрипта, если введено некорректное значение
+        print("Error: invalid value entered. Please enter 'deb' or 'rpm'.")
+        sys.exit(1)  # Exit the script if the value is incorrect
     return package_manager
 
 def run_playwright(package_manager):
     with sync_playwright() as p:
-        # Получаем путь к корню проекта
-        download_path = os.path.join(os.getcwd(), 'downloads')  # Путь для скачиваний
+        # Get the path to the project root
+        download_path = os.path.join(os.getcwd(), 'downloads')  # Path for downloads
         
-        # Убеждаемся, что папка существует
+        # Ensure that the folder exists
         os.makedirs(download_path, exist_ok=True)
         
-        # Запуск браузера Firefox с созданием контекста
+        # Launch the Firefox browser and create a context
         browser = p.firefox.launch()
-        context = browser.new_context(accept_downloads=True)  # Указываем только accept_downloads
+        context = browser.new_context(accept_downloads=True)  # Specify only accept_downloads
         page = context.new_page()
         
-        # Открыть сайт
+        # Open the website
         page.goto('https://communigatepro.ru')
         
-        # Нажать на первую кнопку
+        # Click the first button
         page.click('div.menu-open:nth-child(6) > div:nth-child(1) > a:nth-child(1)')
         
         try:
-            # Ждать появления блока после первого клика 3 секунды
-            page.wait_for_selector('.tn-elem__7428234401714102568894 > div:nth-child(1)', timeout=3000)
+            # Wait for the block to appear after the first click for 3 seconds
+            page.wait_for_selector('.tn-elem__8451643171712515270372 > div:nth-child(1)', timeout=3000)
+            page.click('.tn-elem__8451643171712515270379 > div:nth-child(1) > a:nth-child(1)')
+            # https://communigatepro.ru/server
+            page.wait_for_selector('#rec844676922 > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)', timeout=3000)
+            if package_manager == "deb":
+                page.click('.tn-elem__8446769221735052440322 > a:nth-child(1)')
+            elif package_manager == "rpm":
+                page.click('div.t396__elem:nth-child(36) > a:nth-child(1)')
         except:
-            # Если блок не появился, нажать вторую кнопку
-            print("Первый блок не появился, нажимаем вторую кнопку.")
+            # If the block does not appear, click the second button
+            print("The first block did not appear, clicking the second button.")
             page.click('.tn-elem__7947786241713744839614 > a:nth-child(1)')
             
             try:
-                # Ждать появления блока после второго клика 3 секунды
+                # Wait for the block to appear after the second click for 3 seconds
                 page.wait_for_selector('.tn-elem__7428234401714102568894 > div:nth-child(1)', timeout=3000)
             except:
-                # Если блок не появился после второго клика, завершаем скрипт
-                print("Ошибка: парсер не дождался появления окна загрузки.")
-                # Закрыть контекст и браузер
+                # If the block does not appear after the second click, exit the script
+                print("Error: the parser did not wait for the download window to appear.")
+                # Close the context and browser
                 context.close()
                 browser.close()
-                sys.exit(1)  # Завершаем выполнение скрипта, так как окно загрузки не появилось
+                sys.exit(1)  # Exit the script since the download window did not appear
         
-        # Нажать на кнопку для скачивания и ждать загрузки файла
+        # Click the button to download and wait for the file to download
         with page.expect_download(timeout=10000) as download_info:
             if package_manager == "deb":
                 page.click('.tn-elem__7428234401714102916133 > a:nth-child(1)')
             elif package_manager == "rpm":
                 page.click('.tn-elem__7428234401714102984618 > a:nth-child(1)')
         
-        # Получить информацию о загруженном файле
+        # Get the downloaded file information
         download = download_info.value
-        print(f'Файл загружен: {download.path}')
+        print(f'File downloaded: {download.path}')
         
-        # Переместить файл в нужную директорию
+        # Move the file to the desired directory
         download_path_full = os.path.join(download_path, download.suggested_filename)
         download.save_as(download_path_full)
-        print(f'Файл сохранён в: {download_path_full}')
+        print(f'File saved to: {download_path_full}')
         
-        # Закрыть контекст и браузер
+        # Close the context and browser
         context.close()
         browser.close()
 
 def main():
-    package_manager = type_os()  # Получаем значение package_manager из type_os()
-    run_playwright(package_manager)  # Передаём package_manager в run_playwright
+    package_manager = type_os()  # Get the package_manager value from type_os()
+    run_playwright(package_manager)  # Pass the package_manager to run_playwright
 
 if __name__ == "__main__":
     main()

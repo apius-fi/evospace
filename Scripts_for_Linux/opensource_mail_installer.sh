@@ -1,25 +1,6 @@
 #!/bin/bash
-#  __           _       _      __                                                  
-# / _\ ___ _ __(_)_ __ | |_   / _| ___  _ __                                       
-# \ \ / __| '__| | '_ \| __| | |_ / _ \| '__|                                      
-# _\ \ (__| |  | | |_) | |_  |  _| (_) | |                                         
-# \__/\___|_|  |_| .__/ \__| |_|  \___/|_|                                         
-#                |_|                                                               
-#                  _       _   _                               _                   
-#  _   _ _ __   __| | __ _| |_(_)_ __   __ _    __ _ _ __   __| |                  
-# | | | | '_ \ / _` |/ _` | __| | '_ \ / _` |  / _` | '_ \ / _` |                  
-# | |_| | |_) | (_| | (_| | |_| | | | | (_| | | (_| | | | | (_| |                  
-#  \__,_| .__/ \__,_|\__,_|\__|_|_| |_|\__, |  \__,_|_| |_|\__,_|                  
-#  _    |_|    _        _ _ _          |___/                                       
-# (_)_ __  ___| |_ __ _| | (_)_ __   __ _                                          
-# | | '_ \/ __| __/ _` | | | | '_ \ / _` |                                         
-# | | | | \__ \ || (_| | | | | | | | (_| |                                         
-# |_|_| |_|___/\__\__,_|_|_|_|_| |_|\__, |                                         
-#    ___                            |___/     _   ___      _         ___           
-#   / __\___  _ __ ___  _ __ ___  _   _ _ __ (_) / _ \__ _| |_ ___  / _ \_ __ ___  
-#  / /  / _ \| '_ ` _ \| '_ ` _ \| | | | '_ \| |/ /_\/ _` | __/ _ \/ /_)/ '__/ _ \ 
-# / /__| (_) | | | | | | | | | | | |_| | | | | / /_\\ (_| | ||  __/ ___/| | | (_) |
-# \____/\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|_\____/\__,_|\__\___\/    |_|  \___/ 
+                                               
+
 #
 #-----------------------------------------------------------------------------------
 # Developed by Alexander Guzeew (@guzeew_alex) in December 2024
@@ -34,37 +15,14 @@ blue_b="\e[36;1m" # Request for user action
 dark_blue_b="\e[34;1m" # Response options in the user action prompt
 green_b="\e[32;1m" # Info
 white_b_in_green_back="\e[97;1m\e[42m" # Successful script completion
-white_b_in_orange_back="\e[97;1m\e[48;5;130m" # Current version of CGP, retrieved from https://doc.communigatepro.ru/packages/
+white_b_in_orange_back="\e[97;1m\e[48;5;130m" # Current version of exim, retrieved from https://downloads.exim.org/
 yellow_b="\e[33;1m" # Warnings
-purple="\e[35m" # Start of the script and display of CommuniGate Pro package information
+purple="\e[35m" # Start of the script and display of exim package information
 yellow_b_in_purple_back="\e[33;1m\e[45m" # Message for log label assignment
 
-echo -e "${purple}                            ____            _       _                                
-                           / ___|  ___ _ __(_)_ __ | |_                              
-                           \___ \ / __| '__| | '_ \| __|                             
-                            ___) | (__| |  | | |_) | |_                              
-                           |____/ \___|_|  |_| .__/ \__|                             
-                                             |_|                                     
-                 __              _           _        _ _ _                          
-                / _| ___  _ __  (_)_ __  ___| |_ __ _| | (_)_ __   __ _              
-               | |_ / _ \| '__| | | '_ \/ __| __/ _\` | | | | '_ \ / _\` |             
-               |  _| (_) | |    | | | | \__ \ || (_| | | | | | | | (_| |             
-               |_|  \___/|_|    |_|_| |_|___/\__\__,_|_|_|_|_| |_|\__, |             
-                                                                  |___/              
-                             _                   _       _   _                       
-              __ _ _ __   __| |  _   _ _ __   __| | __ _| |_(_)_ __   __ _           
-             / _\` | '_ \ / _\` | | | | | '_ \ / _\` |/ _\` | __| | '_ \ / _\` |          
-            | (_| | | | | (_| | | |_| | |_) | (_| | (_| | |_| | | | | (_| |          
-             \__,_|_| |_|\__,_|  \__,_| .__/ \__,_|\__,_|\__|_|_| |_|\__, |          
-                                      |_|                            |___/           
-   ____                                      _  ____       _         ____            
-  / ___|___  _ __ ___  _ __ ___  _   _ _ __ (_)/ ___| __ _| |_ ___  |  _ \ _ __ ___  
- | |   / _ \| '_ \` _ \| '_ \` _ \| | | | '_ \| | |  _ / _\` | __/ _ \ | |_) | '__/ _ \ 
- | |__| (_) | | | | | | | | | | | |_| | | | | | |_| | (_| | ||  __/ |  __/| | | (_) |
-  \____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|_|\____|\__,_|\__\___| |_|   |_|  \___/ 
-                                                                                     
- 
-This script is intended for a fresh installation or updating to the latest version of the EXIM mail server${end_color}
+echo -e "${purple}
+                             
+${end_color}
 "
 
 # Check if the script is being run as root
@@ -75,7 +33,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Initialize the main directory for script operation
-download_dir="/root/CGP-install"
+download_dir="/root/exim_install"
 # Check if the directory for script operation exists
 if [ ! -d "$download_dir" ]; then
     echo -e "\n${green_b}The directory $download_dir does not exist. The script will use this directory to save the script log, installer file, and by default for backups.
@@ -89,10 +47,10 @@ log_dir="$download_dir/logs"
 if [ ! -d "$log_dir" ]; then
     mkdir -p "$log_dir"
 fi
-# Get the current date and time for timestamps in log file names
-timestamp=$(date +'%Y-%m-%d_%H-%M-%S')
+# Get the current date and time for log_timestamps in log file names
+log_timestamp=$(date +'%Y-%m-%d_%H-%M-%S')
 # Initialize the script log file
-LOG_FILE="$log_dir/cgp_installer_$timestamp.log"
+LOG_FILE="$log_dir/cgp_installer_$log_timestamp.log"
 # Function to add a timestamp to the log
 log_message() {
     echo -e "${yellow_b_in_purple_back}$(date +'%d/%m/%Y_%H:%M:%S') - $1${end_color}"
@@ -148,7 +106,7 @@ elif command -v dpkg &>/dev/null; then
     package_type="deb"  # For DEB-based distributions
     echo -e "\n${green_b}Distribution type: DEB${end_color}"
 else
-    echo -e "\n${yellow_b_in_red_back}This distribution does not support the CommuniGate Pro mail server.${end_color}"
+    echo -e "\n${yellow_b_in_red_back}This script doesn't support this distribution package type. Please use this script in RPM or DEB like systems.${end_color}"
     log_message "$end_log_message"
     exit 1
 fi
@@ -159,12 +117,12 @@ fi
 #----------START OF FUNCTION for checking internet availability----------#
 # Check for internet connectivity using ping
 check_internet() {
-    echo -e "\nChecking access to the resource doc.communigatepro.ru with the repository for CGP..."
-    if ping -c 4 doc.communigatepro.ru &>/dev/null; then
-        echo -e "${green_b}The CGP repository resource is available. Parsing https://doc.communigatepro.ru/packages/ for the latest CGP version... ${end_color}\n"
+    echo -e "\nChecking access to the resource downloads.exim.org with the repository for exim mail server..."
+    if ping -c 4 downloads.exim.org &>/dev/null; then
+        echo -e "${green_b}The exim repository resource is available. Parsing https://downloads.exim.org/ for the latest exim version... ${end_color}\n"
         return 0
     else
-        echo -e "${yellow_b}No access to the CGP repository resource, there may be issues with the internet connection, or you may be using a closed network.${end_color}\n"
+        echo -e "${yellow_b}No access to the EXIM repository resource, there may be issues with the internet connection, or you may be using a closed network.${end_color}\n"
         return 1
     fi
 }
@@ -173,15 +131,16 @@ check_internet() {
 #----------START OF FUNCTION for getting the download link----------#
 # Function to get the list of links for the latest package versions (deb or rpm)
 get_latest_package_url() {
-    local cgp_url="https://doc.communigatepro.ru/packages/"
+    local exim_url="https://downloads.exim.org/"
 
     # Check if curl command is available, and install it if missing
     if ! command -v curl &>/dev/null; then
         # Install curl based on the distribution type
         if [ "$package_type" == "deb" ]; then
+            # For DEB-based distros (Debian, Ubuntu, MXLinux and others)
             apt update && apt install -y curl
         elif [ "$package_type" == "rpm" ]; then
-            # For RPM-based distributions (CentOS, RHEL, Fedora, and others) - prioritize the newer package manager DNF
+            # For RPM-based distros (CentOS, RHEL, Fedora, and others) - prioritize the newer package manager DNF
             if command -v dnf &>/dev/null; then
                 dnf install -y curl
                 if [ ! $? -eq 0 ]; then
@@ -207,7 +166,7 @@ get_latest_package_url() {
     fi
 
     # Download the page and search for links to .deb or .rpm files
-    page_content=$(curl -s "$cgp_url")
+    page_content=$(curl -s "$exim_url")
 
     if [ "$package_type" == "deb" ]; then
         # Search for links to .deb files, excluding "rc" versions
