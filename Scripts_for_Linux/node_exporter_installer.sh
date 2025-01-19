@@ -188,7 +188,7 @@ elif [ "$type_sys_init" == "OpenRC" ]; then
     fi
 fi
 
-echo -e "Parsing repasitory github.com/prometheus/node_exporter"
+echo -e "Parsing repository github.com/prometheus/node_exporter"
 page_ne_content=$(curl -s https://github.com/prometheus/node_exporter/tags)
 latest_v_tag=$(echo "$page_ne_content" | grep -oP 'href="([^"]+v\d+\.\d+\.\d+)"' | sed 's/href="//' | sed 's/"//' | sort -r | uniq | head -n 1)
 latest_version_ne=$(echo "$latest_v_tag" | grep -oP '\d+\.\d+\.\d+')
@@ -358,56 +358,56 @@ sysv_script="/etc/init.d/$service_name_ne"
 contain_openrc_script=$(cat <<EOF
 #!/sbin/openrc-run
 
-name="node-exporter"
+name="$service_name_ne"
 description="Prometheus Node Exporter"
 
 # Path to the executable file
 command="/usr/local/bin/node_exporter"
-pidfile="/var/run/node_exporter.pid"  # Path to the PID file
+pidfile="/var/run/node_exporter/node_exporter.pid"  # Path to the PID file
 
 # Directory where the PID file will be created
-required_dirs="/var/run"
+required_dirs="/var/run/node_exporter"
 
 # Function for preparation before starting (create the directory if it doesn't exist)
 start_pre() {
-    mkdir -p /var/run
+    mkdir -p /var/run/node_exporter
 }
 
 # Function to start the service
 start() {
-    ebegin "Starting ${name}"
+    ebegin "Starting \$name"
 
     start_pre  # Run preparatory steps
 
     # If the PID file already exists, remove it
-    if [ -f "$pidfile" ]; then
-        rm -f "$pidfile"
+    if [ -f "\$pidfile" ]; then
+        rm -f "\$pidfile"
     fi
 
     # Start the service in the background
-    ${command} --web.listen-address="$listening_port" &
+    \$command --web.listen-address="$listening_port" &
 
     # Write the PID of the process to the file
-    echo $! > "$pidfile"
+    echo \$! > "\$pidfile"
 
     # Set the ownership of the PID file
-    chown node_exporter:node_exporter "$pidfile"
+    chown node_exporter:node_exporter "\$pidfile"
 
-    eend $?  # Finish with the success code
+    eend \$?  # Finish with the success code
 }
 
 # Function to stop the service
 stop() {
-    ebegin "Stopping ${name}"
+    ebegin "Stopping \$name"
 
     # Check for the existence of the PID file
-    if [ -f "$pidfile" ]; then
-        pid=$(cat "$pidfile")  # Read the PID from the file
+    if [ -f "\$pidfile" ]; then
+        pid=\$(cat "\$pidfile")  # Read the PID from the file
 
         # Terminate the process using the PID
-        kill "$pid" && rm -f "$pidfile"  # Remove the PID file after stopping
+        kill "\$pid" && rm -f "\$pidfile"  # Remove the PID file after stopping
 
-        eend $?  # Finish with the success code
+        eend \$?  # Finish with the success code
     else
         eerror "PID file not found, service might not be running."
         eend 1  # Finish with an error
@@ -422,13 +422,13 @@ restart() {
 
 # Function to check the status of the service
 status() {
-    if [ -f "$pidfile" ]; then
-        pid=$(cat "$pidfile")  # Read the PID from the file
-        if ps -p "$pid" > /dev/null; then
-            echo "${name} is running with PID $pid"
+    if [ -f "\$pidfile" ]; then
+        pid=\$(cat "\$pidfile")  # Read the PID from the file
+        if ps -p "\$pid" > /dev/null; then
+            echo "\$name is running with PID \$pid"
             return 0
         else
-            eerror "${name} is not running but PID file exists."
+            eerror "\$name is not running but PID file exists."
             return 1
         fi
     else
