@@ -1,0 +1,88 @@
+---
+- name: Check if node_exporter group exists
+  ansible.builtin.getent:
+    database: group
+    key: node_exporter
+  register: node_exporter_group
+  ignore_errors: yes
+
+- name: Create node_exporter group
+  ansible.builtin.group:
+    name: node_exporter
+    system: yes
+  when: node_exporter_group is not defined or node_exporter_group.ansible_facts.getent_group is undefined
+
+- name: Check if node_exporter user exists
+  ansible.builtin.getent:
+    database: passwd
+    key: node_exporter
+  register: node_exporter_user
+  ignore_errors: yes
+
+- name: Create node_exporter user
+  ansible.builtin.user:
+    name: node_exporter
+    group: node_exporter
+    system: yes
+    shell: /usr/sbin/nologin
+  when: node_exporter_user is not defined or node_exporter_user.ansible_facts.getent_passwd is undefined
+
+- name: Download Node Exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}.tar.gz"
+    dest: /tmp/node_exporter.tar.gz
+
+- name: Extract Node Exporter
+  unarchive:
+    src: /tmp/node_exporter.tar.gz
+    dest: /opt/
+    remote_src: yes
+
+- name: Move Node Exporter binary to /usr/local/bin
+  copy:
+    src: "/opt/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}/node_exporter"
+    dest: /usr/local/bin/node_exporter
+    owner: node_exporter
+    group: node_exporter
+    mode: '0755'
+
+- name: Create systemd service for Node Exporter
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload systemd config
+
+# Immediately handlers
+  - name: Flush handlers immediately after creation systemd service node_exporter
+    meta: flush_handlers
+
+- name: Enable and start Node Exporter service
+  service:
+    name: node_exporter
+    enabled: yes
+    state: started
+
+- name: Ensure Node Exporter service is running
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+  register: node_exporter_service_status
+  until: node_exporter_service_status is success
+  retries: 3
+  delay: 5
+
+- name: Clean up temporary files
+  block:
+    - name: Remove downloaded archive
+      file:
+        path: /tmp/node_exporter.tar.gz
+        state: absent
+
+    - name: Remove extracted files
+      file:
+        path: "/opt/node_exporter-{{ node_exporter_version }}.linux-{{ node_exporter_arch }}"
+        state: absent
+  when: node_exporter_service_status is success
