@@ -1,5 +1,0 @@
-# Версия Node Exporter
-node_exporter_version: "1.8.1"
-
-# Архитектура пакета (amd64, arm64 и т.д.)
-node_exporter_arch: "amd64"
