@@ -3,7 +3,7 @@
 
 Switch to [dev_branch](https://github.com/apius-fi/evospace/tree/dev)
 
-**Contact the author: telegram - [@ave_lex](https://t.me/ave_lex)**
+**Contact the author: telegram - [@guzeew_alex](https://t.me/guzeew_alex)**
 
 ### [CGP](https://github.com/apius-fi/evospace/tree/main/CGP) Directory
 Here are the scripts and programs for working with the Russian mail server CommuniGate Pro:
