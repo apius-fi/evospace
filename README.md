@@ -1,7 +1,7 @@
-# evospace/dev
-## Repository with Programs. DEV branch
+# evospace/main
+## Repository with Programs. MAIN branch
 
-**Contact the author: telegram - [@guzeew_alex](https://t.me/guzeew_alex)**
+**Contact the author: telegram - [@ave_lex](https://t.me/ave_lex)**
 
 ### CGP Directory
 Here are the scripts and programs for working with the Russian mail server CommuniGate Pro:
