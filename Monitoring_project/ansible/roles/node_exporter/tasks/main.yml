@@ -1,23 +1,8 @@
 ---
-- name: Check if node_exporter group exists
-  ansible.builtin.getent:
-    database: group
-    key: node_exporter
-  register: node_exporter_group
-  ignore_errors: yes
-
 - name: Create node_exporter group
   ansible.builtin.group:
     name: node_exporter
     system: yes
-  when: node_exporter_group is not defined or node_exporter_group.ansible_facts.getent_group is undefined
-
-- name: Check if node_exporter user exists
-  ansible.builtin.getent:
-    database: passwd
-    key: node_exporter
-  register: node_exporter_user
-  ignore_errors: yes
 
 - name: Create node_exporter user
   ansible.builtin.user:
@@ -25,7 +10,6 @@
     group: node_exporter
     system: yes
     shell: /usr/sbin/nologin
-  when: node_exporter_user is not defined or node_exporter_user.ansible_facts.getent_passwd is undefined
 
 - name: Download Node Exporter
   get_url:
