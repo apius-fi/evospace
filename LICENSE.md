@@ -2,7 +2,7 @@
 # The License
 ========================
 
-**Copyright © `2019-2025` `Guzeew Alexander`**
+**Copyright © `2019-2025` `Aurelian Alexander`**
 
 **Contact the author: telegram - [@aurelian_alexander](https://t.me/aurelian_alexander)**  
 
