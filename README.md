@@ -1,9 +1,7 @@
 # evospace/main
 ## Repository with Programs. MAIN branch
 
-Switch to [dev_branch](https://github.com/apius-fi/evospace/tree/dev)
-
-**Contact the author: telegram - [@guzeew_alexander](https://t.me/guzeew_alexander)**
+**Contact the author: telegram - [@guzeew_alexander](https://t.me/guzeew_alexander)**  
 
 ### [CGP](https://github.com/apius-fi/evospace/tree/main/CGP) Directory
 Here are the scripts and programs for working with the Russian mail server CommuniGate Pro:
@@ -17,7 +15,7 @@ Here are the scripts designed to automate routine tasks in Linux-based operating
 2. node_exporter_installer.sh - A script for installing node exporter on a host for monitoring through Prometheus.
 
 -------------------------------------------------------------------------------------------
-### [Site_about_Space](https://github.com/apius-fi/evospace/tree/main/Site_about_Space)
+### [Site_about_Space](https://github.com/apius-fi/evospace/tree/main/Site_about_Space) Directory
 This is a website about space that I created in 2019 using HTML and CSS. Inside there is a simple server, implemented by me in python, as well as a site generator based on a template, with paths to static files taken as variables.<br><br>
 
 ## RU:
