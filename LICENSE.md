@@ -4,7 +4,7 @@
 
 **Copyright © `2019-2025` `Aurelian Alexander`**
 
-**Contact the author: telegram - [@aurelian_alexander](https://t.me/aurelian_alexander)**
+**Contact the author: telegram - [@appius_alexander](https://t.me/appius_alexander)**
 
 This license permits any person obtaining a copy 
 of this software and associated documentation
@@ -42,7 +42,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 **Copyright © `2019-2025` `Аврелиан Александр Анатольевич`**
 
-**Связь с автором: telegram - [@aurelian_alexander](https://t.me/aurelian_alexander)**
+**Связь с автором: telegram - [@appius_alexander](https://t.me/appius_alexander)**
 
 Данная лицензия разрешает лицам, получившим копию данного 
 программного обеспечения и сопутствующей документации 

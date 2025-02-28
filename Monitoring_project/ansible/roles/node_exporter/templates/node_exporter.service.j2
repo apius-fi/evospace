@@ -6,6 +6,7 @@ After=network.target
 User=node_exporter
 Group=node_exporter
 ExecStart=/usr/local/bin/node_exporter \
+# --collector.textfile.directory=/var/lib/node_exporter/textfile_collector.d \
 --web.listen-address=:{{ node_exporter_port }}
 
 [Install]
