@@ -2,9 +2,9 @@
 # The License
 ========================
 
-**Copyright © `2019-2025` `Aurelian Alexander`**
+**Copyright © `2019-2025` `Guzeew Alexander`**
 
-**Contact the author: telegram - [@aurelian_alexander](https://t.me/aurelian_alexander)**  
+**Contact the author: telegram - [@guzeew_alexander](https://t.me/guzeew_alexander)**  
 
 This license permits any person obtaining a copy 
 of this software and associated documentation
@@ -42,7 +42,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 **Copyright © `2019-2025` `Гузеев Александр Анатольевич`**
 
-**Связь с автором: telegram - [@aurelian_alexander](https://t.me/aurelian_alexander)**  
+**Связь с автором: telegram - [@guzeew_alexander](https://t.me/guzeew_alexander)**  
 
 Данная лицензия разрешает лицам, получившим копию данного 
 программного обеспечения и сопутствующей документации 
